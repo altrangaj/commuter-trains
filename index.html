@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://code.jquery.com/jquery-1.12.1.js"></script>
+	<link rel="stylesheet" href="tyyli.css">
+	<link rel="preload" as="image" href="images/tausta3small.png">
+	<link rel="preload" as="image" href="images/tausta2small.png">
+    <title>TRAINS</title>
+  </head>
+  <body style="opacity: 0;">
+	  <div class="parallax" data-type="background" data-speed="-1.5"></div>
+	  <div class="juttu" >
+	    <div class="container parallax" data-type="background" data-speed="-0.4" style="background-image: url(images/tausta3small.png);">
+	      <div class="row" style="padding-top: 0.5em;">
+		    <div class="col-sm-4" ></div>
+			<div class="col-sm-4" style="text-align:left;">
+				<span id="header" style="font-size:3em;line-height:1.2em;color:#ff9933;font-weight:bold;
+					white-space: nowrap;">commuter trains</span>
+				
+			</div>
+			<div class="col-sm-4" >
+			  <div style="font-size: 2em;color: #ff9933;text-align: left;margin-top: 0.3em;white-space: nowrap;" id="timeperiod"></div>	
+            </div>
+          </div>
+		<div class="row" style="margin-top: 0.5em;" >
+		  <div class="col-sm-4" ></div>
+            <div class="col-sm-4"  >	
+              <table style="width: 100%;text-align: center;">
+                 <tr style="font-size: 1em;">
+					<td id ="st" style="
+						background-color: #ff9933;
+						color: white;
+						border-width: 0em;
+						border-color: rgba(0,0,0,0);
+						
+						font-weight: bold;" >
+						station
+                    </td>
+                    <td style="background-color: rgba(0,0,0,0);border-width: 0em;border-color: rgba(0,0,0,0);">
+					   <input list="stations" name="station" id="selectstation" style="width: 100%;max-width: 50rem;padding-left: 1em;">
+                       <datalist style="width:100%;" id="stations"></datalist>
+					</td>
+				 </tr>
+			   </table>
+			</div>
+			<div class="col-sm-4" ></div>
+		</div>
+			<div class="row" >
+				<div class="col-sm-4" >
+				</div>
+				<div class="col-sm-4">
+					<table id="timeTable" style="width: 100%;">
+					</table>
+				</div>
+				<div class="col-sm-4" >
+				</div>
+			</div>
+			<div class="row" >
+				<div class="col-sm-4" ></div>
+				<div class="col-sm-4" ></div>
+				<div class="col-sm-4">
+					<div id="bottom-left" >
+						<ul style="list-style-type: none;padding-left: 0em;margin-bottom: 0em;">  
+							<li style="color: #99ffe6;">live estimate time</li>
+							<li style="color: #cce6ff;">time table value</li>
+							<li style="color: #ff9933;">&#916;t: time late</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div class="row" >
+				<div class="col-sm-12"  style="color: #ff9933;text-align: center;font-size: 0.5em;padding-top: 0em;">
+					&nbsp;<!--Copyright &copy; Juhan tuotanto-->
+				</div>
+			</div>
+    	</div>
+	</div>
+	<div class="parallax" data-type="background" data-speed="-1.5"></div>
+	<script src="jaava.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  </body>
+</html>

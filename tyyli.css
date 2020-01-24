@@ -1,0 +1,89 @@
+.row {				
+    color:#cce6ff;
+}
+.timeCell{
+    background:rgba(48,48,54,.6);
+    padding:0px;
+    border-color:black;
+    border-width:1px;
+    border-style:solid hidden solid hidden;
+}
+th {
+    background:#595959;
+}
+.container {
+    max-width:100%;
+}
+.ending {
+    font-weight:bold;
+    background:#1b2132;
+    color:#99ccff	;
+    border-top-right-radius:14px;
+    border-bottom-right-radius:14px;
+}
+.starting{	
+    font-weight:bold;			
+    background:#1b2132;
+    color:#99ccff	;
+    border-top-left-radius:14px;
+    border-bottom-left-radius:14px;
+}
+html {
+    height: 100%;
+    background-color:#303036;
+}
+body {
+    height: 100%;
+    background-color:#303036;
+    transition: opacity 1s;
+}
+.parallax {
+    height: 90%;	
+    text-align:center;
+    background-size: cover;
+    background-repeat:repeat;
+    background-image:url(images/tausta2small.png);
+    animation-name: backGroundAnim;
+    animation-timing-function:ease-in;
+    animation-duration:500ms;
+}
+@keyframes backGroundAnim {
+    from {opacity: 0;}
+    to {opacity: 1;}
+  }
+.juttu {
+    height:fit-content;
+    text-align:center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+    background-image:url(images/tausta3small.png);
+    animation-name: backGroundAnim;
+    animation-timing-function:ease-in;
+    animation-duration:500ms;
+}
+td {
+    font-size:1em;
+    text-align:center;
+    z-index:-10;
+    font-size:1em;
+}
+#st{
+    width:5em;
+    height:2em;
+    border-top-left-radius:14px;
+    border-bottom-left-radius:14px;
+}
+#bottom-left {
+    left: 0;
+    bottom: 0;
+    font-size:.8em;
+    text-align:left;
+    padding-left:0em;
+    padding-bottom:0em;
+    display:none;
+}
+#bottom-left li{
+    line-height:1.3em;
+}
