@@ -10,20 +10,16 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script src="https://code.jquery.com/jquery-1.12.1.js"></script>
 	<link rel="stylesheet" href="tyyli.css">
-	<link rel="preload" as="image" href="images/tausta3small.png">
 	<link rel="preload" as="image" href="images/tausta2small.png">
     <title>TRAINS</title>
   </head>
   <body style="opacity: 0;">
-	  <div class="parallax" data-type="background" data-speed="-1.5"></div>
-	  <div class="juttu" >
-	    <div class="container parallax" data-type="background" data-speed="-0.4" style="background-image: url(images/tausta3small.png);">
+	  <div id="parallax" data-type="background" data-speed="-0.7">
+	  <div id="juttu" >
 	      <div class="row" style="padding-top: 0.5em;">
 		    <div class="col-sm-4" ></div>
 			<div class="col-sm-4" style="text-align:left;">
-				<span id="header" style="font-size:3em;line-height:1.2em;color:#ff9933;font-weight:bold;
-					white-space: nowrap;">commuter trains</span>
-				
+				<span id="header" style="font-size:3em;line-height:1.2em;color:#ff9933;font-weight:bold;white-space:nowrap;">commuter trains</span>
 			</div>
 			<div class="col-sm-4" >
 			  <div style="font-size: 2em;color: #ff9933;text-align: left;margin-top: 0.3em;white-space: nowrap;" id="timeperiod"></div>	
@@ -39,13 +35,14 @@
 						color: white;
 						border-width: 0em;
 						border-color: rgba(0,0,0,0);
-						
 						font-weight: bold;" >
 						station
                     </td>
-                    <td style="background-color: rgba(0,0,0,0);border-width: 0em;border-color: rgba(0,0,0,0);">
-					   <input list="stations" name="station" id="selectstation" style="width: 100%;max-width: 50rem;padding-left: 1em;">
-                       <datalist style="width:100%;" id="stations"></datalist>
+					<td style="background-color: rgba(0,0,0,0);border-width: 0em;border-color: rgba(0,0,0,0);">
+					   <div id='animatible' style="text-align:center;width:0%;">
+					   <input list="stations" width="100%" on name="station" type="text" id="selectstation" placeholder="select station" style="width:100%;padding-left: 0em;text-align: center;">
+					   <datalist style="text-align: center;  width:100%;" id="stations"></datalist>
+					</div>
 					</td>
 				 </tr>
 			   </table>
@@ -80,9 +77,8 @@
 					&nbsp;<!--Copyright &copy; Juhan tuotanto-->
 				</div>
 			</div>
-    	</div>
 	</div>
-	<div class="parallax" data-type="background" data-speed="-1.5"></div>
+	</div>
 	<script src="jaava.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
