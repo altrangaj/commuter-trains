@@ -4,13 +4,33 @@ document.body.onload = () => {
 $("#animatible").hide()
 
 let yPos = window.innerHeight/3
-document.getElementById("juttu").style.transform = `translate(0px,${yPos}px)`
-document.getElementById("parallax").style.backgroundPositionY=`${0.5*yPos}px`
+document.getElementById('juttu').style.transform = `translate(0px,${yPos}px)`
+document.getElementById('parallax').style.backgroundPositionY=`${0.5*yPos}px`
+let touchstartY = 0
+let touchendY = 0
 
+window.addEventListener('touchstart', (event) => {
+  touchstartY = event.changedTouches[0].screenY;
+}, false)
+window.onmousedown = (event) => {
+  touchstartY = event.clientY
+}
+window.onmouseup = (event) => {
+  touchendY = event.clientY
+  if(event.target.id !== 'selectstation') handleSwipe(event)
+}
+window.addEventListener('touchend', (event) => {
+  touchendY = event.changedTouches[0].screenY;
+    handleSwipe(event)
+}, false)
+const handleSwipe = event => {
+   event.myDelta = -9*(touchstartY-touchendY)/window.innerHeight
+   parallax(event)
+}
 const addMouseWheelEventListener = scrollHandler => {
   if (window.addEventListener) {
-    window.addEventListener("mousewheel", scrollHandler, false);
-    window.addEventListener("DOMMouseScroll", scrollHandler, false);
+    window.addEventListener('mousewheel', scrollHandler, false);
+    window.addEventListener('DOMMouseScroll', scrollHandler, false);
   } 
   else {
     console.log('IE 6/7/8')
@@ -18,12 +38,12 @@ const addMouseWheelEventListener = scrollHandler => {
   }
 }
 
-const parallax = event => {                                                       // Animation step for parallax effect
+const parallax = event => {                                                      // Animation step for parallax effect
   const e = window.event || event 
-  var delta = Math.max(-1, Math.min(1, e.wheelDelta || -e.detail))                                                     
-  let x = document.getElementById("juttu")
+  var delta = event.myDelta ? event.myDelta : Math.max(-1, Math.min(1, e.wheelDelta || -e.detail))                                              
+  let x = document.getElementById('juttu')
   let x2 = document.getElementById("parallax")
-  let dy = delta*70
+  let dy = delta*90
   if( -Math.abs(dy)-x.offsetHeight < (yPos+dy) && (yPos + dy) < window.innerHeight){
     yPos += dy
     x.style.transform =`translate(0px,${yPos}px)`
