@@ -174,7 +174,7 @@ const getStationDataArray = array => {
   for(i = 0; i < array.length; i++){
     if(array[i].trainCategory === 'Commuter'){ 
         
-      const object = array[i].timeTableRows.find(obj => (obj.stationShortCode === statId && obj.type === 'DEPARTURE' && !obj.actualTime))
+      let object = array[i].timeTableRows.find(obj => (obj.stationShortCode === statId && obj.type === 'DEPARTURE' && !obj.actualTime))
       object.commuterLineID = array[i].commuterLineID
       object.destination = array[i].timeTableRows[array[i].timeTableRows.length-1].stationShortCode
             
