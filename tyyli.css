@@ -64,6 +64,8 @@ body {
     to {opacity: 1;}
   }
 #juttu {
+    padding-left: 1em;
+    padding-right: 1em;
     position: relative;
     height:fit-content;
     overflow-y:visible;

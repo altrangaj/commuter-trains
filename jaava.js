@@ -1,8 +1,8 @@
 document.body.onload = () => {
   document.body.style.opacity = 1
 }
-$("#animatible").hide()
 
+$("#animatible").hide()
 let yPos = window.innerHeight/3
 document.getElementById('juttu').style.transform = `translate(0px,${yPos}px)`
 document.getElementById('parallax').style.backgroundPositionY=`${0.5*yPos}px`
@@ -12,38 +12,40 @@ let touchendY = 0
 window.addEventListener('touchstart', (event) => {
   touchstartY = event.changedTouches[0].screenY;
 }, false)
+
 window.onmousedown = (event) => {
   touchstartY = event.clientY
 }
+
 window.onmouseup = (event) => {
   touchendY = event.clientY
   if(event.target.id !== 'selectstation') handleSwipe(event)
 }
+
 window.addEventListener('touchend', (event) => {
   touchendY = event.changedTouches[0].screenY;
     handleSwipe(event)
 }, false)
+
 const handleSwipe = event => {
    event.myDelta = -9*(touchstartY-touchendY)/window.innerHeight
    parallax(event)
 }
+
 const addMouseWheelEventListener = scrollHandler => {
   if (window.addEventListener) {
-    window.addEventListener('mousewheel', scrollHandler, false);
-    window.addEventListener('DOMMouseScroll', scrollHandler, false);
+    window.addEventListener('mousewheel', scrollHandler, false)
+    window.addEventListener('DOMMouseScroll', scrollHandler, false)
   } 
-  else {
-    console.log('IE 6/7/8')
-    window.attachEvent("onmousewheel", scrollHandler);
-  }
+  else window.attachEvent("onmousewheel", scrollHandler)
 }
 
 const parallax = event => {                                                      // Animation step for parallax effect
   const e = window.event || event 
-  var delta = event.myDelta ? event.myDelta : Math.max(-1, Math.min(1, e.wheelDelta || -e.detail))                                              
-  let x = document.getElementById('juttu')
-  let x2 = document.getElementById("parallax")
-  let dy = delta*90
+  const delta = event.myDelta ? event.myDelta : Math.max(-1, Math.min(1, e.wheelDelta || -e.detail))                                              
+  const x = document.getElementById('juttu')
+  const x2 = document.getElementById("parallax")
+  const dy = delta*90
   if( -Math.abs(dy)-x.offsetHeight < (yPos+dy) && (yPos + dy) < window.innerHeight){
     yPos += dy
     x.style.transform =`translate(0px,${yPos}px)`
@@ -76,41 +78,33 @@ const findCommuterStations = stations => {                                      
     if(stations[i].trainCategory === 'Commuter')
       if(!commuterTrains.find(obj => (obj.commuterLineID === stations[i].commuterLineID)))
         commuterTrains.push(stations[i])
-            
-  let count = 0
-  for (let i = 0; i < commuterTrains.length; i++){
+  for (let i = 0; i < commuterTrains.length; i++)
     for(j = 0; j < commuterTrains[i].timeTableRows.length; j++)
-      if(!commuterStations.find(obj => (obj.stationShortCode === commuterTrains[i].timeTableRows[j].stationShortCode))){
+      if(!commuterStations.find(obj => (obj.stationShortCode === commuterTrains[i].timeTableRows[j].stationShortCode)))
         commuterStations.push({stationShortCode:commuterTrains[i].timeTableRows[j].stationShortCode})
-        count++
-      }
-        
-  }
-  console.log('commuter stations: ' + count)
   loadDoc(url,getStations)
 }
 
-$("#st").on("mouseover", function() {                                             // UI animation (doesn't work with Firefox)
-    $("#animatible").show();
-    if($("#animatible").css('width') !== '100%') {
-    $( "#animatible" ).animate({
-        "width": "100%"
-    }, {
-      duration: 1000,
-    complete:function(){
-        $( "#animatible" ).css({'max-width':'100%'})
-    }
-  })}
+$("#st").on("mouseover", () => {
+    $("#animatible").show()
+    if($("#animatible").css('width') !== '100%') 
+      $( "#animatible" ).animate({
+          "width": "100%"
+      }, {
+        duration: 1000,
+        complete: () => {
+            $( "#animatible" ).css({'max-width':'100%'})
+        }
+    })
 })
 
 loadDoc(url3, findCommuterStations)
 
 const getStations = arr => {                                                       // datalist-items
   let out = ''
-  for(let i = 0; i < arr.length; i++) {
+  for(let i = 0; i < arr.length; i++) 
     if(commuterStations.find(obj => (obj.stationShortCode == arr[i].stationShortCode)))
       out += `<option id='${arr[i].stationShortCode}' value='${arr[i].stationName}' style='width:fit-content;'></option>`
-  }
   $('#stations').html(out)
 }
 
@@ -176,11 +170,11 @@ const trainI = ['HKI', 'PSL', 'KÄP', 'OLK', 'PMK', 'ML', 'TNA', 'PLA', 'TKL', '
   'LAV', 'MRL', 'LOH', 'MYR', 'MLO', 'KAN', 'POH', 'HPL', 'KHK', 'ILA', 'PSL', 'HKI']  // for special cases (train I and P, P = reverse(I) ).
 
 const getStationDataArray = array => {
-  var stationDataArr = []
-  for(var i = 0; i < array.length; i++){
+  const stationDataArr = []
+  for(i = 0; i < array.length; i++){
     if(array[i].trainCategory === 'Commuter'){ 
         
-      var object = array[i].timeTableRows.find(obj => (obj.stationShortCode === statId && obj.type === 'DEPARTURE' && !obj.actualTime))
+      const object = array[i].timeTableRows.find(obj => (obj.stationShortCode === statId && obj.type === 'DEPARTURE' && !obj.actualTime))
       object.commuterLineID = array[i].commuterLineID
       object.destination = array[i].timeTableRows[array[i].timeTableRows.length-1].stationShortCode
             
@@ -212,24 +206,22 @@ const getStationDataArray = array => {
 }
 
 const printLocalTime = dateString => {
-  var dat = stringToDate(dateString)
-  var d = new Date(dat.getTime()-dat.getTimezoneOffset()*60*1000)
+  const dat = stringToDate(dateString)
+  const d = new Date(dat.getTime()-dat.getTimezoneOffset()*60*1000)
   return d.toTimeString().slice(0,8)
 }
 
-const stringToDate = s => {
-  var year = s.slice(0,4)
-  var month = s.slice(5,7)
-  var day = s.slice(8,10)
-  var hour = s.slice(11,13)
-  var min = s.slice(14,16)
-  var sec =s.slice(17,19)
-  return new Date(year,month,day,hour,min,sec,0)
-}
+const stringToDate = s => new Date(
+  s.slice(0,4),
+  s.slice(5,7),
+  s.slice(8,10),
+  s.slice(11,13),
+  s.slice(14,16),
+  s.slice(17,19),0)
 
 const compare = (a,b) => {
-  var aDate = (a.liveEstimateTime ? a.liveEstimateTime : a.scheduledTime)
-  var bDate = (b.liveEstimateTime ? b.liveEstimateTime : b.scheduledTime)
+  const aDate = (a.liveEstimateTime ? a.liveEstimateTime : a.scheduledTime)
+  const bDate = (b.liveEstimateTime ? b.liveEstimateTime : b.scheduledTime)
   if (aDate < bDate)
     return -1
   if (aDate > bDate)
@@ -237,23 +229,22 @@ const compare = (a,b) => {
   return 0
 }
 
-var timer = 0
+let timer = 0
 
 const getStationData = stationShortCode => {
-  var url2 = 'https://rata.digitraffic.fi/api/v1/live-trains/station/' + stationShortCode +
+  const url2 = 'https://rata.digitraffic.fi/api/v1/live-trains/station/' + stationShortCode +
     '?minutes_before_departure=60&minutes_after_departure=0&minutes_before_arrival=0&minutes_after_arrival=0&include_nonstopping=false'
   loadDoc(url2,showTrains)
   timer=setTimeout(getStationData.bind(null,stationShortCode), 20000)                                                                   //updates 3 times in minute
 }
 
 const listSelectionHandler = () => {
-  
-  var test = $('#stations option[value="' + $('#selectstation').val() + '"]').attr('id')
+  const test = $('#stations option[value="' + $('#selectstation').val() + '"]').attr('id')
   if(test != undefined){
     clearTimeout(timer)
     statId = test
     getStationData(statId)
-    $('#header,#timeperiod').fadeOut('slow', function(){
+    $('#header,#timeperiod').fadeOut('slow', () => {
       $('#header').html($('#selectstation').val())
       $('#header,#timeperiod').fadeIn('slow')
     })	
@@ -267,7 +258,7 @@ $('#selectstation').click(e => {
   $('input[name=station]').val('')
 })
 
-'select change'.split(' ').forEach(function(e){
+'select change'.split(' ').forEach(e => {
   window.addEventListener(e,listSelectionHandler,false)
 })
 
