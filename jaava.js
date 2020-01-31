@@ -1,9 +1,11 @@
 document.body.onload = () => {
   document.body.style.opacity = 1
+  $('#header').change()
 }
 
 $("#animatible").hide()
 let yPos = window.innerHeight/3
+
 document.getElementById('juttu').style.transform = `translate(0px,${yPos}px)`
 document.getElementById('parallax').style.backgroundPositionY=`${0.5*yPos}px`
 let touchstartY = 0
@@ -19,7 +21,7 @@ window.onmousedown = (event) => {
 
 window.onmouseup = (event) => {
   touchendY = event.clientY
-  if(event.target.id !== 'selectstation') handleSwipe(event)
+  if(event.target.id !== 'selectstation' && event.target.id !== 'st' ) handleSwipe(event)
 }
 
 window.addEventListener('touchend', (event) => {
@@ -58,9 +60,9 @@ addMouseWheelEventListener(parallax)
 const loadDoc = (url, cfunc) => {                                                  // wrapper function for Ajax call function
   let xhttp
   xhttp=new XMLHttpRequest()
-  xhttp.onreadystatechange = () => {
+  xhttp.onreadystatechange = async () => {
     if (xhttp.readyState === 4 && xhttp.status == 200) {
-      cfunc(JSON.parse(xhttp.responseText))
+      await cfunc(JSON.parse(xhttp.responseText))
     }
   }
   xhttp.open('GET', url, true)
@@ -99,12 +101,16 @@ $("#st").on("mouseover", () => {
 })
 
 loadDoc(url3, findCommuterStations)
+let st
 
-const getStations = arr => {                                                       // datalist-items
+const getStations = arr => {        
+  st = new Map()                                               // datalist-items
   let out = ''
   for(let i = 0; i < arr.length; i++) 
-    if(commuterStations.find(obj => (obj.stationShortCode == arr[i].stationShortCode)))
+    if(commuterStations.find(obj => (obj.stationShortCode == arr[i].stationShortCode))){
       out += `<option id='${arr[i].stationShortCode}' value='${arr[i].stationName}' style='width:fit-content;'></option>`
+      st.set(arr[i].stationShortCode,arr[i].stationName)
+    }
   $('#stations').html(out)
 }
 
@@ -239,17 +245,30 @@ const getStationData = stationShortCode => {
 }
 
 const listSelectionHandler = () => {
-  const test = $('#stations option[value="' + $('#selectstation').val() + '"]').attr('id')
-  if(test != undefined){
+  const test = $(`#stations option[value='${$('#selectstation').val()}']`).attr('id')
+  if(test && test != statId){
     clearTimeout(timer)
     statId = test
     getStationData(statId)
     $('#header,#timeperiod').fadeOut('slow', () => {
-      $('#header').html($('#selectstation').val())
+      $('#header').html(st.get(statId))
       $('#header,#timeperiod').fadeIn('slow')
+      $('#header').change()
     })	
   }
 }
+
+const setHeaderFontSize = () => {
+  $('#header').css({'font-size':`${Math.round(2*$('#headerSpace').width()/$('#header').text().length)}px`})
+  let i = 1
+  do {
+    $('#header').css({'font-size':`${Math.round(2*$('#headerSpace').width()/$('#header').text().length)-i++}px`})
+  } while ($('#header').width() >= $('#headerSpace').width())
+}
+
+window.addEventListener('resize', setHeaderFontSize)
+
+$('#header').change(setHeaderFontSize)
 
 $('input[name=station]').mouseover(e => {
   $('input[name=station]').val('')
