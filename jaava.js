@@ -284,7 +284,8 @@ const setHeaderFontSize = () => {
   let i = 1
   
   do {
-    hg = Math.round(2*$('#headerSpace').width()/$('#header').text().length)-i++
+    hg = Math.round(2*$('#headerSpace').width()/$('#header').text().length)-i
+    i+=1
     $('#header').css({'font-size':`${hg}px`})
   } while ($('#header').width() >= $('#headerSpace').width())
  
