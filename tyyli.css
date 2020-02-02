@@ -1,12 +1,16 @@
 .row {				
-    color:#cce6ff;
+    color:#cce6ff;   
 }
 .timeCell{
     background:rgba(48,48,54,.6);
     padding:0px;
-    border-color:black;
-    border-width:1px;
-    border-style:solid hidden solid hidden;
+    border-spacing: 0px;
+    border-bottom-color:black;
+    border-bottom-width:1px;
+    border-bottom-style:solid;
+    border-top-color:black;
+    border-top-width:1px;
+    border-top-style:solid;
 }
 th {
     background:#595959;
@@ -17,24 +21,29 @@ th {
 }
 .ending {
     font-weight:bold;
-    background:#1b2132;
-    color:#99ccff	;
-    border-top-right-radius:14px;
-    border-bottom-right-radius:14px;
+    background:transparent;
+    
+    color:#99ccff;
+    width: 1em;
+    
+    
+    
 }
 .starting{	
-    font-weight:bold;			
-    background:#1b2132;
-    color:#99ccff	;
-    border-top-left-radius:14px;
-    border-bottom-left-radius:14px;
+    font-weight:bold;	
+    width: 1em;		
+    background:transparent;
+    color:#99ccff;
+    
 }
 html {
+    line-height: 1em;
     height: 100%;
     background-color:#303036;
     scroll-behavior: smooth;
 }
 body {
+    line-height: 1em;
     overflow: hidden;
     height: fit-content;
     background-color:#303036;

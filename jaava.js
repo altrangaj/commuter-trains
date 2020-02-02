@@ -119,22 +119,41 @@ const showTrains = arr => {
 }
 
 const createRow = (i,arr) => {                                                        // time table row
-  let row = `<tr id='${i}'><td class='starting' style='text-align:center;'>` + 
-        `${arr[i].commuterLineID}</td><td class='timeCell' style='padding-left:1em;padding-right:1em;text-align:left;'>`
+  let row = `<tr border-spacing: 0px;' id='${i}'><td class='starting' style='padding:0;border-right:solid 1px black;border-spacing: 0px;'>
+      <div style='
+      display:inline-block;
+      float:right;
+      padding: 0em 0 0.1em 0.2em;
+      margin: 0.1em 0em 0.1em 0em;
+      border:solid 2px black;
+      background:#1b2132;
+      border-top-left-radius:1em;
+      border-bottom-left-radius:1em;
+      text-shadow:-2px 0 black, 0 2px black, 2px 0 black, 0 -2px black'>${arr[i].commuterLineID}</div></td><td class='timeCell' style='padding-left:0.5em;padding-right:0.5em;text-align:center;'>`
   if(arr[i].liveEstimateTime) {
-    row += `<span style='color:#99ffe6;'>${printLocalTime(arr[i].liveEstimateTime)}` + 
-            `</span></td><td style='padding-right:1em;' class='timeCell'>${arr[i].destination}</td>`
+    row += `<span style='margin:0px;padding:0px;color:#99ffe6;'>${printLocalTime(arr[i].liveEstimateTime)}` + 
+            `</span></td><td style='padding-right:0.5em;' class='timeCell'>${arr[i].destination}</td>`
     if(arr[i].differenceInMinutes !== 0) 
-      row += ` </span><td class='timeCell' style='padding-right:1em;'><span style='color:#ff9933;'> &nbsp;&#916;t:`+
+      row += ` </span><td class='timeCell' style='padding-right:0.5em;'><span style='color:#ff9933;'> &nbsp;&#916;t:`+
                 `${arr[i].differenceInMinutes}min</td>`                                                                     
     else row += `<td class='timeCell'></td>`
   } else if(arr[i].cancelled)
-    row += `${printLocalTime(arr[i].scheduledTime)}</td><td style='padding-right:1em;' class='timeCell'>` + 
-            `${arr[i].destination}</td><td class='timeCell'><span style='color:#ff9933;'>CANCELLED</span></td>`
+    row += `${printLocalTime(arr[i].scheduledTime)}</td><td style='padding-right:0.5em;' class='timeCell'>` + 
+            `${arr[i].destination}</td><td class='timeCell'><span style='margin:0px;padding:0px;color:#ff9933;'>CANCELLED</span></td>`
   else 
-    row += `${printLocalTime(arr[i].scheduledTime)}</td><td style='padding-right:1em;' class='timeCell'>`+ 
+    row += `${printLocalTime(arr[i].scheduledTime)}</td><td style='padding-right:0.5em;' class='timeCell'>`+ 
             `${arr[i].destination}</td><td class='timeCell'></td>`	                                                 
-  row += `<td class='ending' style='text-align:center;'>${arr[i].commercialTrack}</td></tr>`
+  row += `<td class='ending' style='padding:0;border-left:solid 1px black;border-spacing: 0px;'>
+    <div style='
+      display:inline-block;
+      float:left;
+      padding: 0em 0.2em  0.1em 0;
+      margin: 0.1em 0em 0.1em 0em;
+      border:solid 1px black;
+      background:#1b2132;
+      border-top-right-radius:1em;
+      border-bottom-right-radius:1em;
+      text-shadow:-2px 0 black, 0 2px black, 2px 0 black, 0 -2px black'>${arr[i].commercialTrack}</div></td></tr>`
   return row
 }
 
@@ -161,6 +180,8 @@ const dispayTrains = arr => {
   let time = new Date()
   $('#timeperiod').html((time.toTimeString().slice(0,5) + ' - ' + 
   (new Date(time.getTime() + 3600000)).toTimeString().slice(0,5)))
+
+  $('.middle').css({'min-width':`${$('#timeTable').width()}px`})
 }
 
 const showTr = tr => {
@@ -250,20 +271,25 @@ const listSelectionHandler = () => {
     clearTimeout(timer)
     statId = test
     getStationData(statId)
-    $('#header,#timeperiod').fadeOut('slow', () => {
-      $('#header').html(st.get(statId))
-      $('#header,#timeperiod').fadeIn('slow')
-      $('#header').change()
-    })	
+    $('#header').html(st.get(statId))
+    $('#selectstation').blur()
+    $('#header').change()
   }
 }
 
 const setHeaderFontSize = () => {
-  $('#header').css({'font-size':`${Math.round(2*$('#headerSpace').width()/$('#header').text().length)}px`})
+  let hg = Math.round(2*$('#headerSpace').width()/$('#header').text().length)
+  $('#header').css({'font-size':`${hg}px`})
+  $('.middle').css({'min-width':`${$('#timeTable').width()}px`})
   let i = 1
+  
   do {
-    $('#header').css({'font-size':`${Math.round(2*$('#headerSpace').width()/$('#header').text().length)-i++}px`})
+    hg = Math.round(2*$('#headerSpace').width()/$('#header').text().length)-i++
+    $('#header').css({'font-size':`${hg}px`})
   } while ($('#header').width() >= $('#headerSpace').width())
+ 
+  if((Number($('#header').css('font-size').replace('px','')) < 32))  $('#timeperiod').css({'font-size': $('#header').css('font-size')})
+  else $('#timeperiod').css({'font-size': '2em'})
 }
 
 window.addEventListener('resize', setHeaderFontSize)
@@ -280,6 +306,3 @@ $('#selectstation').click(e => {
 'select change'.split(' ').forEach(e => {
   window.addEventListener(e,listSelectionHandler,false)
 })
-
-
-        
