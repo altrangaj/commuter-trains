@@ -30,7 +30,7 @@ window.addEventListener('touchend', (event) => {
 }, false)
 
 const handleSwipe = event => {
-   event.myDelta = -9*(touchstartY-touchendY)/window.innerHeight
+   event.myDelta = -5*(touchstartY-touchendY)/window.innerHeight
    parallax(event)
 }
 
@@ -108,7 +108,7 @@ const getStations = arr => {
   let out = ''
   for(let i = 0; i < arr.length; i++) 
     if(commuterStations.find(obj => (obj.stationShortCode == arr[i].stationShortCode))){
-      out += `<option id='${arr[i].stationShortCode}' value='${arr[i].stationName}' style='width:fit-content;'></option>`
+      out += `<option id='${arr[i].stationShortCode}' value='${arr[i].stationName}' style='width:fit-content;line-height:1.5em;font-size:x-large;'></option>`
       st.set(arr[i].stationShortCode,arr[i].stationName)
     }
   $('#stations').html(out)
@@ -119,78 +119,42 @@ const showTrains = arr => {
 }
 
 const createRow = (i,arr) => {                                                        // time table row
-  let row = `<tr border-spacing: 0px;' id='${i}'><td class='starting' style='padding:0;border-right:solid 1px black;border-spacing: 0px;'>
-      <div style='
-      display:inline-block;
-      float:right;
-      padding: 0em 0 0.1em 0.2em;
-      margin: 0.1em 0em 0.1em 0em;
-      border:solid 2px black;
-      background:#1b2132;
-      border-top-left-radius:1em;
-      border-bottom-left-radius:1em;
-      text-shadow:-2px 0 black, 0 2px black, 2px 0 black, 0 -2px black'>${arr[i].commuterLineID}</div></td><td class='timeCell' style='padding-left:0.5em;padding-right:0.5em;text-align:center;'>`
+  let row = `<tr id='${i}'><td style='width:1em;padding:0;border-right:solid 1px black;border-spacing: 0px;'>
+      <div class='starting'>${arr[i].commuterLineID}</div></td><td class='timeCell' 
+      style='padding-left:0.5em;padding-right:0.5em;text-align:center;'>`
   if(arr[i].liveEstimateTime) {
     row += `<span style='margin:0px;padding:0px;color:#99ffe6;'>${printLocalTime(arr[i].liveEstimateTime)}` + 
-            `</span></td><td style='padding-right:0.5em;' class='timeCell'>${arr[i].destination}</td>`
+            `</span></td><td style='padding-right:0em;' class='timeCell'>${arr[i].destination}</td>`
     if(arr[i].differenceInMinutes !== 0) 
       row += ` </span><td class='timeCell' style='padding-right:0.5em;'><span style='color:#ff9933;'> &nbsp;&#916;t:`+
                 `${arr[i].differenceInMinutes}min</td>`                                                                     
     else row += `<td class='timeCell'></td>`
   } else if(arr[i].cancelled)
-    row += `${printLocalTime(arr[i].scheduledTime)}</td><td style='padding-right:0.5em;' class='timeCell'>` + 
+    row += `${printLocalTime(arr[i].scheduledTime)}</td><td style='padding-right:0em;' class='timeCell'>` + 
             `${arr[i].destination}</td><td class='timeCell'><span style='margin:0px;padding:0px;color:#ff9933;'>CANCELLED</span></td>`
   else 
     row += `${printLocalTime(arr[i].scheduledTime)}</td><td style='padding-right:0.5em;' class='timeCell'>`+ 
             `${arr[i].destination}</td><td class='timeCell'></td>`	                                                 
-  row += `<td class='ending' style='padding:0;border-left:solid 1px black;border-spacing: 0px;'>
-    <div style='
-      display:inline-block;
-      float:left;
-      padding: 0em 0.2em  0.1em 0;
-      margin: 0.1em 0em 0.1em 0em;
-      border:solid 1px black;
-      background:#1b2132;
-      border-top-right-radius:1em;
-      border-bottom-right-radius:1em;
-      text-shadow:-2px 0 black, 0 2px black, 2px 0 black, 0 -2px black'>${arr[i].commercialTrack}</div></td></tr>`
+  row += `<td style='width:1em;padding:0;border-left:solid 1px black;border-spacing: 0px;'>
+    <div class='ending'>${arr[i].commercialTrack}</div></td></tr>`
   return row
 }
 
 let statId
-let temp2 = null
 
 const dispayTrains = arr => { 
   $('#timeTable').html('')
   let row = ''
-  if(statId == temp2){ 
-    for(i = 0; i < arr.length; i++) { 
-      row += createRow(i,arr)
-    }
-    $('#timeTable').html(row)
-  } else { 
-    for(i = 0; i < arr.length; i++) {
-      row = createRow(i,arr)
-      $(row).appendTo($('#timeTable'))
-      showTr($(`#${i}`))
-    }
+  for(i = 0; i < arr.length; i++) { 
+     row += createRow(i,arr)
   }
-  $('#timeTable').css({'margin-bottom':'0.5em','margin-top':'0.5em'})
-  temp2 = statId
+  $('#timeTable').html(row)
+  $('#timeTable').css({'margin-bottom':'0.2em','margin-top':'0.5em'})
   let time = new Date()
   $('#timeperiod').html((time.toTimeString().slice(0,5) + ' - ' + 
   (new Date(time.getTime() + 3600000)).toTimeString().slice(0,5)))
-
   $('.middle').css({'min-width':`${$('#timeTable').width()}px`})
-}
-
-const showTr = tr => {
-  tr.show()
-  tr.find('td').wrapInner('<div style="display: none;" />').parent().find('td > div').slideToggle(800, function(){
-    let $set = jQuery(this)
-    $set.replaceWith($set.contents())
-    $('#bottom-left').slideDown(300)
-  })                                                                                                                               
+  $('#bottom-left').show()
 }
 
 const trainI = ['HKI', 'PSL', 'KÄP', 'OLK', 'PMK', 'ML', 'TNA', 'PLA', 'TKL', 'HKH', 'HVK', 'ASO', 'LNÄ', 'LEN', 'VMS', 'AVP', 'RSM', 'KTÖ', 'VEH', 'VKS', 

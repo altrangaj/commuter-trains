@@ -1,10 +1,18 @@
-.row {				
-    color:#cce6ff;   
+tr:nth-child(even) .timeCell{				
+    
+    background:rgba(48,48,54,.6);
+}
+tr:nth-child(odd) .timeCell{				
+     
+    background:rgba(68, 68, 82, 0.6);
+}
+.row {
+    color:#cce6ff; 
 }
 .timeCell{
-    background:rgba(48,48,54,.6);
-    padding:0px;
-    border-spacing: 0px;
+    padding-bottom:0.1em;
+    vertical-align: middle;
+    line-height: 1em;
     border-bottom-color:black;
     border-bottom-width:1px;
     border-bottom-style:solid;
@@ -21,23 +29,39 @@ th {
 }
 .ending {
     font-weight:bold;
-    background:transparent;
-    
-    color:#99ccff;
-    width: 1em;
-    
-    
-    
+    color:#c1f0d9;
+    display:inline-block;
+    text-align:center;
+    width:fit-content;
+    min-width:1em;
+    float:left;
+    padding: 0em 0.2em 0.1em 0.1em;
+    margin: 0.2em 0em 0.2em 0em;
+    border:solid 1px black;
+    background-color:#141f14;
+    background-image: radial-gradient(#334d33 30%,#141f14);
+    border-top-right-radius:0.5em;
+    border-bottom-right-radius:0.5em;
+    text-shadow:-1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
 }
 .starting{	
     font-weight:bold;	
-    width: 1em;		
-    background:transparent;
-    color:#99ccff;
-    
+    color:#ccf2ff;
+    display:inline-block;
+    width:fit-content;
+    min-width:1em;
+    text-align:center;
+    float:right;
+    padding: 0em 0.1em 0.1em 0.2em;
+    margin: 0.2em 0em 0.2em 0em;
+    border:solid 1px black;
+    background-color:#1b2131;
+    background-image: radial-gradient(#3f4d73 30%,#1b2131);
+    border-top-left-radius:0.5em;
+    border-bottom-left-radius:0.5em;
+    text-shadow:-1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
 }
 html {
-    line-height: 1em;
     height: 100%;
     background-color:#303036;
     scroll-behavior: smooth;
@@ -45,7 +69,6 @@ html {
 body {
     line-height: 1em;
     overflow: hidden;
-    height: fit-content;
     background-color:#303036;
     transition: opacity 1s;
     scroll-behavior: smooth;
@@ -87,14 +110,12 @@ body {
     transition-timing-function: ease-out;
 }
 td {
-    font-size:1em;
+    height:1.5em;
     text-align:center;
     z-index:-10;
-    font-size:1em;
 }
 #st{
-    width:5em;
-    height:2em;
+    width:4em;
     border-top-left-radius:14px;
     border-bottom-left-radius:14px;
 }
@@ -109,7 +130,4 @@ td {
 }
 #bottom-left li{
     line-height:1.3em;
-}
-#info-box::after {
-	content: attr(data-scroll-direction);
 }
